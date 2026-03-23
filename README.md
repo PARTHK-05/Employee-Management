@@ -195,12 +195,14 @@ Layer 4: API (Backend Communication)
 
 ## Setup & Deployment
 
-### Backend Setup
+### Setup Steps
+
+### 1) Backend Setup
 
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+venv\Scripts\activate            # On Linux/Mac: source venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -217,7 +219,7 @@ uvicorn main:app --reload
 # Docs: http://localhost:8000/docs
 ```
 
-### Frontend Setup
+### 2) Frontend Setup
 
 ```bash
 cd frontend
@@ -241,7 +243,7 @@ npm run build
 # Output: frontend/dist/
 ```
 
-### Database Setup
+### 3) Database Setup (MySQL)
 
 ```sql
 CREATE DATABASE employee_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -249,10 +251,42 @@ CREATE DATABASE employee_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 Tables auto-create via SQLAlchemy on startup.
 
+### 4) Optional Deployment Note
+
+For cloud deployment (Railway/Render), do not use `localhost` in `DATABASE_URL`.
+Use the managed database host, username, password, and database name provided by your cloud provider.
+
 ### Environment Templates
 
 - Use [backend/.env.example](backend/.env.example) as backend environment template.
 - Use [frontend/.env.example](frontend/.env.example) as frontend environment template.
+
+---
+
+## Database Choice
+
+This project uses **MySQL** with **SQLAlchemy ORM**.
+
+Why MySQL was chosen:
+- Relational schema is a strong fit for structured employee records.
+- Reliable support for filtering and pagination queries.
+- Easy portability between local development and managed cloud MySQL.
+- Mature tooling and ecosystem for production environments.
+
+How database access is handled:
+- SQLAlchemy connection pooling is enabled.
+- `pool_pre_ping=True` checks connection health before usage.
+- `pool_recycle=3600` helps avoid stale MySQL connections.
+
+---
+
+## Search Performance (Conceptual)
+
+The search flow is optimized with practical safeguards:
+- **Controlled request flow**: API calls are made on explicit user action (Search button), not on every keystroke.
+- **Server-side pagination**: `limit` and `offset` prevent loading unnecessary rows.
+- **Targeted endpoint design**: separate routes for general text search and department search keep query intent clear.
+- **Database-level efficiency**: filtering is executed in SQL, with architecture ready for indexing on searchable columns (`name`, `department`).
 
 ---
 
