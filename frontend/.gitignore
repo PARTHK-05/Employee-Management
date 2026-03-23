@@ -1,0 +1,58 @@
+﻿# Node Modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build Output
+dist/
+dist-ssr/
+build/
+.next/
+out/
+.env
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS Files
+.DS_Store
+Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Vite Cache
+.vite/
+.cache/
+
+# Testing
+coverage/
+.nyc_output/
+jest-coverage/
+*.local
+
+# Misc
+.turbo/
+tsconfig.tsbuildinfo
